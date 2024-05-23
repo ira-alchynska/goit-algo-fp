@@ -48,7 +48,8 @@ def array_to_bst(arr, index=0):
 
 def color_nodes_by_traversal(tree_root, traversal_order):
     colors = list(mcolors.TABLEAU_COLORS.values())
-    color_step = len(colors) // len(traversal_order)
+    colors.reverse() 
+    color_step = max(1, len(colors) // len(traversal_order)) 
     
     for i, node in enumerate(traversal_order):
         node.color = colors[(i * color_step) % len(colors)]
@@ -71,23 +72,20 @@ def bfs_traversal(node):
     return order
 
 def main():
-
     heap_array = [0, 4, 1, 5, 10, 3]
-
 
     heap_tree = array_to_bst(heap_array)
 
-    #  (DFS)
+    # DFS
     dfs_order = []
     dfs_traversal(heap_tree, dfs_order)
     color_nodes_by_traversal(heap_tree, dfs_order)
     print("Візуалізація обходу в глибину (DFS):")
     draw_tree(heap_tree)
 
-  
+    # Reset tree and BFS
     heap_tree = array_to_bst(heap_array)
 
-    #  (BFS)
     bfs_order = bfs_traversal(heap_tree)
     color_nodes_by_traversal(heap_tree, bfs_order)
     print("Візуалізація обходу в ширину (BFS):")
